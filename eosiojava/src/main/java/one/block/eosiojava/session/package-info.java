@@ -2,4 +2,4 @@
  * Provides the core classes to handle transaction manipulation.
  */
 
-package one.block.eosiojava.session;
+package one.block.eosiojava.sessionTest;

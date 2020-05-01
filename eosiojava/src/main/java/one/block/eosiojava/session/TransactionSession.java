@@ -1,20 +1,20 @@
-package one.block.eosiojava.session;
+package one.block.androidexampleapp.testImplementation;
 
 import one.block.eosiojava.error.session.TransactionProcessorConstructorInputError;
 import one.block.eosiojava.interfaces.IABIProvider;
 import one.block.eosiojava.interfaces.IRPCProvider;
 import one.block.eosiojava.interfaces.ISerializationProvider;
 import one.block.eosiojava.interfaces.ISignatureProvider;
-import one.block.eosiojava.models.rpcProvider.Transaction;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Transaction Session class has a factory role for creating {@link TransactionProcessor} object from providers instances
+ * Transaction Session class has a factory role for creating {@link TransactionProcessorTest} object from providers instances
  */
 public class TransactionSession {
 
     /**
-     * Serialization provider to be used as a reference on {@link TransactionProcessor} object
+     * Serialization provider to be used as a reference on {@link TransactionProcessorTest} object
      * <br>
      *     Responsible for serialization/deserialization between JSON and Hex for communicate with EOSIO chain
      */
@@ -22,7 +22,7 @@ public class TransactionSession {
     private ISerializationProvider serializationProvider;
 
     /**
-     * Rpc provider to be used as a reference on {@link TransactionProcessor} object
+     * Rpc provider to be used as a reference on {@link TransactionProcessorTest} object
      * <br>
      *     Responsible for communicate with EOSIO chain
      */
@@ -30,7 +30,7 @@ public class TransactionSession {
     private IRPCProvider rpcProvider;
 
     /**
-     * ABI Provider to be used as a reference on {@link TransactionProcessor} object
+     * ABI Provider to be used as a reference on {@link TransactionProcessorTest} object
      * <br>
      *     Responsible for managing ABIs for serialization/deserialization
      */
@@ -38,7 +38,7 @@ public class TransactionSession {
     private IABIProvider abiProvider;
 
     /**
-     * Signature provider to be used as a reference on {@link TransactionProcessor} object
+     * Signature provider to be used as a reference on {@link TransactionProcessorTest} object
      * <br>
      *     Responsible for managing keys, create signature to make transaction to EOSIO chain
      */
@@ -46,14 +46,14 @@ public class TransactionSession {
     private ISignatureProvider signatureProvider;
 
     /**
-     * Initialize TransactionSession object which acts like a factory to create {@link TransactionProcessor} object from providers instances.
+     * Initialize TransactionSession object which acts like a factory to create {@link TransactionProcessorTest} object from providers instances.
      *
      * @param serializationProvider serialization provider.
      * @param rpcProvider Rpc provider.
      * @param abiProvider ABI provider.
      * @param signatureProvider signature provider.
      */
-    public TransactionSession(
+    public TransactionSessionTest(
             @NotNull ISerializationProvider serializationProvider,
             @NotNull IRPCProvider rpcProvider, @NotNull IABIProvider abiProvider,
             @NotNull ISignatureProvider signatureProvider) {
@@ -68,8 +68,8 @@ public class TransactionSession {
      *
      * @return new instance of TransactionProcessor
      */
-    public TransactionProcessor getTransactionProcessor() {
-        return new TransactionProcessor(this.serializationProvider, this.rpcProvider,
+    public TransactionProcessorTest getTransactionProcessor() {
+        return new TransactionProcessorTest(this.serializationProvider, this.rpcProvider,
                 this.abiProvider, this.signatureProvider);
     }
 
@@ -78,17 +78,17 @@ public class TransactionSession {
      *
      * @param transaction - preset transaction
      * @return new instance of TransactionProcessor
-     * @throws TransactionProcessorConstructorInputError thrown if initializing {@link TransactionProcessor} get error.
+     * @throws TransactionProcessorConstructorInputError thrown if initializing {@link TransactionProcessorTest} get error.
      */
-    public TransactionProcessor getTransactionProcessor(Transaction transaction) throws TransactionProcessorConstructorInputError {
-        return new TransactionProcessor(this.serializationProvider, this.rpcProvider,
+    public TransactionProcessorTest getTransactionProcessor(TransactionTest transaction) throws TransactionProcessorConstructorInputError {
+        return new TransactionProcessorTest(this.serializationProvider, this.rpcProvider,
                 this.abiProvider, this.signatureProvider, transaction);
     }
 
     //region getters
 
     /**
-     * Get serialization provider to be used as a reference on {@link TransactionProcessor} object
+     * Get serialization provider to be used as a reference on {@link TransactionProcessorTest} object
      * <br>
      *     Responsible for serialization/deserialization between JSON and Hex for communicate with EOSIO chain
      * @return the serialization provider
@@ -99,7 +99,7 @@ public class TransactionSession {
     }
 
     /**
-     * Get rpc provider to be used as a reference on {@link TransactionProcessor} object
+     * Get rpc provider to be used as a reference on {@link TransactionProcessorTest} object
      * <br>
      *     Responsible for communicate with EOSIO chain
      * @return the rpc provider.
@@ -110,7 +110,7 @@ public class TransactionSession {
     }
 
     /**
-     * Get ABI Provider to be used as a reference on {@link TransactionProcessor} object
+     * Get ABI Provider to be used as a reference on {@link TransactionProcessorTest} object
      * <br>
      *     Responsible for managing ABIs for serialization/deserialization
      * @return the rpc provider.
@@ -121,7 +121,7 @@ public class TransactionSession {
     }
 
     /**
-     * Get signature provider to be used as a reference on {@link TransactionProcessor} object
+     * Get signature provider to be used as a reference on {@link TransactionProcessorTest} object
      * <br>
      *     Responsible for managing keys, create signature to make transaction to EOSIO chain
      * @return the signature provider.
@@ -132,3 +132,4 @@ public class TransactionSession {
     }
     //endregion
 }
+

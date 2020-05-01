@@ -14,15 +14,6 @@ group 'one.block'
 repositories {
     jcenter()
     mavenCentral()
-
-    //Remove maven{} block if you are not using Artifactory
-    maven {
-        credentials{
-            username artifactory_username
-            password artifactory_password
-        }
-        url artifactory_contextURL
-    }
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -82,27 +73,4 @@ publishing {
 }
 
 //Remove artifactory{} block if you are not using Artifactory
-artifactory {
-    contextUrl = artifactory_contextURL
-    publish {
-        repository {
-            repoKey = artifactory_repo
-
-            username = artifactory_username
-            password = artifactory_password
-        }
-        defaults {
-            publications('jar')
-            publishArtifacts = true
-
-            properties = ['qa.level': 'basic', 'q.os': 'android', 'dev.team': 'core']
-            publishPom = true
-        }
-    }
-}
 //Remove deleteOldVersion{} block if you are not using Artifactory
-task deleteOldVersion(){
-    def auth = artifactory_username + ':' + artifactory_password
-    def repo = artifactory_contextURL + '/android-libs-scratch-local' + '/one/block/eosiojava'
-    ['curl', '-XDELETE', 'POST', '-u', auth, repo].execute()
-}

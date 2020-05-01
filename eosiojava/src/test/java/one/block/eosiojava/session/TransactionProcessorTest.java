@@ -516,6 +516,39 @@ public class TransactionProcessorTest {
         }
     }
 
+    @Test
+    public void testContextFreeDataPrepare() {
+        // Prepare and sign
+        this.mockDefaultSuccessData();
+        String contextFreeData = "someContextFreeData";
+
+        // Context free actions
+        TransactionProcessor processor = session.getTransactionProcessor();
+        try {
+            processor.prepare(this.defaultActions(), this.defaultActions(), contextFreeData);
+        } catch (TransactionPrepareError transactionPrepareError) {
+            transactionPrepareError.printStackTrace();
+            fail("Exception should not be thrown here for calling prepare.");
+        }
+
+        try {
+            String serialized = processor.serialize();
+            System.out.print(serialized);
+            assertNotEquals("", serialized);
+        } catch (TransactionSerializeError transactionSerializeError) {
+            transactionSerializeError.printStackTrace();
+            fail("Exception should not be thrown here for calling serialize.");
+        }
+
+        try {
+            PushTransactionResponse response = processor.signAndBroadcast();
+            System.out.print("TransactionID: " + response.getTransactionId());
+        } catch (TransactionSignAndBroadCastError transactionSignAndBroadcastError) {
+            transactionSignAndBroadcastError.printStackTrace();
+            fail("Exception should not be thrown here for calling serialize.");
+        }
+    }
+
     private void mockDefaultSuccessData() {
         this.mockRPC(
                 Utils.getGson(DateFormatter.BACKEND_DATE_PATTERN).fromJson(mockedGetInfoResponse, GetInfoResponse.class),

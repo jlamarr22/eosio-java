@@ -55,6 +55,10 @@ public class Transaction implements Serializable {
     @NotNull
     private List<Action> contextFreeActions;
 
+    @SerializedName("context_free_data")
+    @NotNull
+    private String contextFreeData;
+
     /**
      * The Actions which have data about action of an account with hex/json data for the detail
      */
@@ -78,13 +82,15 @@ public class Transaction implements Serializable {
      * @param contextFreeActions the context free actions
      * @param actions the actions
      * @param transactionExtensions the transaction extensions
+     * @param contextFreeData the context free data
      */
     public Transaction(@NotNull String expiration, @NotNull BigInteger refBlockNum,
             @NotNull BigInteger refBlockPrefix,
             @NotNull BigInteger maxNetUsageWords,
             @NotNull BigInteger maxCpuUsageMs, @NotNull BigInteger delaySec,
             @NotNull List<Action> contextFreeActions,
-            @NotNull List<Action> actions, @NotNull List<String> transactionExtensions) {
+            @NotNull List<Action> actions, @NotNull List<String> transactionExtensions,
+            @NotNull String contextFreeData) {
         this.expiration = expiration;
         this.refBlockNum = refBlockNum;
         this.refBlockPrefix = refBlockPrefix;
@@ -94,6 +100,37 @@ public class Transaction implements Serializable {
         this.contextFreeActions = contextFreeActions;
         this.actions = actions;
         this.transactionExtensions = transactionExtensions;
+        this.contextFreeData = contextFreeData;
+    }
+
+    /**
+     * Instantiates a new Transaction.
+     *
+     * @param expiration the expiration
+     * @param refBlockNum the ref block num
+     * @param refBlockPrefix the ref block prefix
+     * @param maxNetUsageWords the max net usage words
+     * @param maxCpuUsageMs the max cpu usage ms
+     * @param delaySec the delay sec
+     * @param contextFreeActions the context free actions
+     * @param actions the actions
+     * @param transactionExtensions the transaction extensions
+     */
+    public Transaction(@NotNull String expiration, @NotNull BigInteger refBlockNum,
+            @NotNull BigInteger refBlockPrefix,
+            @NotNull BigInteger maxNetUsageWords,
+            @NotNull BigInteger maxCpuUsageMs, @NotNull BigInteger delaySec,
+            @NotNull List<Action> contextFreeActions,
+            @NotNull List<Action> actions, @NotNull List<String> transactionExtensions) {
+        this(expiration, refBlockNum, refBlockPrefix, maxNetUsageWords, maxCpuUsageMs, delaySec,
+                contextFreeActions, actions, transactionExtensions, "");
+    }
+
+    @NotNull
+    public String getContextFreeData() { return contextFreeData; }
+
+    public void setContextFreeData(@NotNull String contextFreeData) {
+        this.contextFreeData = contextFreeData;
     }
 
     /**
