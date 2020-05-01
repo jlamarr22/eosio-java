@@ -1,4 +1,4 @@
-package one.block.androidexampleapp.testImplementation;
+package one.block.eosiojava.session;
 
 import com.google.common.base.Strings;
 import java.io.IOException;
@@ -57,7 +57,6 @@ import one.block.eosiojava.models.rpcProvider.response.GetRequiredKeysResponse;
 import one.block.eosiojava.models.rpcProvider.response.PushTransactionResponse;
 import one.block.eosiojava.models.signatureProvider.EosioTransactionSignatureRequest;
 import one.block.eosiojava.models.signatureProvider.EosioTransactionSignatureResponse;
-import one.block.eosiojava.session.TransactionProcessor;
 import one.block.eosiojava.utilities.DateFormatter;
 import one.block.eosiojava.utilities.Utils;
 import org.jetbrains.annotations.NotNull;
@@ -180,6 +179,7 @@ public class TransactionProcessor {
 
     /**
      * Chain id of target blockchain that will be used in createSignatureRequest()
+     * {@link TransactionProcessor#createSignatureRequest()}
      */
     @Nullable
     private String chainId;
@@ -192,7 +192,7 @@ public class TransactionProcessor {
     private boolean isTransactionModificationAllowed;
 
     /**
-     * Constructor with all provider references from
+     * Constructor with all provider references from {@link TransactionSession}
      * @param serializationProvider the serialization provider.
      * @param rpcProvider the rpc provider.
      * @param abiProvider the abi provider.
@@ -210,7 +210,7 @@ public class TransactionProcessor {
     }
 
     /**
-     * Constructor with all provider references from
+     * Constructor with all provider references from {@link TransactionSession} and preset
      * Transaction
      * @param serializationProvider the serialization provider.
      * @param rpcProvider the rpc provider.
@@ -551,7 +551,6 @@ public class TransactionProcessor {
      */
     @Nullable
     public String serialize() throws TransactionSerializeError {
-        System.out.println("Got in to serialize()");
         // Return serialized version of the Transaction, if it exists, otherwise serialize the
         // transaction and return the result.
         if (this.serializedTransaction != null && !this.serializedTransaction.isEmpty()) {

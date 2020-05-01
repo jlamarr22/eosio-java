@@ -1,11 +1,11 @@
-package one.block.androidexampleapp.testImplementation;
+package one.block.eosiojava.session;
 
 import one.block.eosiojava.error.session.TransactionProcessorConstructorInputError;
 import one.block.eosiojava.interfaces.IABIProvider;
 import one.block.eosiojava.interfaces.IRPCProvider;
 import one.block.eosiojava.interfaces.ISerializationProvider;
 import one.block.eosiojava.interfaces.ISignatureProvider;
-
+import one.block.eosiojava.models.rpcProvider.Transaction;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -53,7 +53,7 @@ public class TransactionSession {
      * @param abiProvider ABI provider.
      * @param signatureProvider signature provider.
      */
-    public TransactionSessionTest(
+    public TransactionSession(
             @NotNull ISerializationProvider serializationProvider,
             @NotNull IRPCProvider rpcProvider, @NotNull IABIProvider abiProvider,
             @NotNull ISignatureProvider signatureProvider) {
@@ -132,4 +132,3 @@ public class TransactionSession {
     }
     //endregion
 }
-
