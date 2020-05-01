@@ -109,11 +109,11 @@ public class TransactionProcessor {
      * Transaction instance that holds all data relating to an EOS Transaction.
      * <p>
      * This object holds the non-serialized version of the transaction.  However, the serialized
-     * version can be extracted by calling the serialize() {@link TransactionProcessorTest#serialize()}
+     * version can be extracted by calling the serialize() {@link TransactionProcessor#serialize()}
      * method.
      */
     @Nullable
-    private TransactionTest transaction;
+    private Transaction transaction;
 
     /**
      * This is an original instance of the transaction that is populated once the signature
@@ -122,7 +122,7 @@ public class TransactionProcessor {
      * Check getSignature() flow in "complete workflow" doc for more detail
      */
     @Nullable
-    private TransactionTest originalTransaction;
+    private Transaction originalTransaction;
 
     /**
      * List of signatures used to sign the transaction.  This is populated after the transaction
@@ -198,7 +198,7 @@ public class TransactionProcessor {
      * @param abiProvider the abi provider.
      * @param signatureProvider the signature provider.
      */
-    public TransactionProcessorTest(
+    public TransactionProcessor(
             @NotNull ISerializationProvider serializationProvider,
             @NotNull IRPCProvider rpcProvider,
             @NotNull IABIProvider abiProvider,
@@ -219,12 +219,12 @@ public class TransactionProcessor {
      * @param transaction - preset Transaction
      * @throws TransactionProcessorConstructorInputError thrown if the input transaction has an empty action list.
      */
-    public TransactionProcessorTest(
+    public TransactionProcessor(
             @NotNull ISerializationProvider serializationProvider,
             @NotNull IRPCProvider rpcProvider,
             @NotNull IABIProvider abiProvider,
             @NotNull ISignatureProvider signatureProvider,
-            @NotNull TransactionTest transaction) throws TransactionProcessorConstructorInputError {
+            @NotNull Transaction transaction) throws TransactionProcessorConstructorInputError {
         this(serializationProvider, rpcProvider, abiProvider, signatureProvider);
         this.transaction = transaction;
         if (this.transaction.getActions().isEmpty()) {
@@ -274,7 +274,7 @@ public class TransactionProcessor {
          Transaction if it was set by constructor.  Modifying a new transaction avoids corrupting the
          original if an exception is encountered during the modification process.
         */
-        TransactionTest preparingTransaction = new TransactionTest("", BigInteger.ZERO, BigInteger.ZERO,
+        Transaction preparingTransaction = new Transaction("", BigInteger.ZERO, BigInteger.ZERO,
                 BigInteger.ZERO, BigInteger.ZERO, BigInteger.ZERO, contextFreeActions, actions,
                 new ArrayList<String>(), contextFreeData);
 
@@ -716,7 +716,7 @@ public class TransactionProcessor {
                         deserializeTransactionError);
             }
 
-            this.transaction = Utils.getGson(DateFormatter.BACKEND_DATE_PATTERN).fromJson(transactionJSON, TransactionTest.class);
+            this.transaction = Utils.getGson(DateFormatter.BACKEND_DATE_PATTERN).fromJson(transactionJSON, Transaction.class);
         }
 
         this.signatures = new ArrayList<>();
@@ -769,8 +769,7 @@ public class TransactionProcessor {
      */
     @NotNull
     private String serializeTransaction() throws TransactionCreateSignatureRequestError {
-        System.out.println("Got in to serializeTransaction");
-        TransactionTest clonedTransaction;
+        Transaction clonedTransaction;
         try {
             clonedTransaction = this.getDeepClone();
         } catch (IOException e) {
@@ -937,7 +936,7 @@ public class TransactionProcessor {
     /**
      * Getting deep clone of the transaction
      */
-    private TransactionTest getDeepClone() throws IOException, ClassNotFoundException {
+    private Transaction getDeepClone() throws IOException, ClassNotFoundException {
         if (this.transaction == null) {
             return null;
         }
@@ -950,7 +949,7 @@ public class TransactionProcessor {
      *
      * @param preparingTransaction - prepared transaction
      */
-    private void finishPreparing(TransactionTest preparingTransaction) {
+    private void finishPreparing(Transaction preparingTransaction) {
         this.transaction = preparingTransaction;
         // Clear serialized transaction if it was serialized.
         if (!Strings.isNullOrEmpty(this.serializedTransaction)) {
